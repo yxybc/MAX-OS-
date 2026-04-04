@@ -11,6 +11,7 @@
             padding: 0;
             box-sizing: border-box;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            transition: all 0.3s ease;
         }
 
         :root {
@@ -18,6 +19,7 @@
             --text: #1d1d1f;
             --primary: #007aff;
             --card: #ffffff;
+            --nav-bg: rgba(245, 245, 247, 0.9);
         }
 
         @media (prefers-color-scheme: dark) {
@@ -26,6 +28,7 @@
                 --text: #f5f5f7;
                 --primary: #409eff;
                 --card: #1a1a1a;
+                --nav-bg: rgba(15, 15, 15, 0.9);
             }
         }
 
@@ -33,106 +36,270 @@
             background: var(--bg);
             color: var(--text);
             line-height: 1.6;
+            opacity: 0;
+            transition: opacity 1s ease;
         }
 
-        /* 顶部导航 */
+        body.fade-in {
+            opacity: 1;
+        }
+
+        /* 加载动画 */
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease;
+        }
+
+        .spin {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(0, 122, 255, 0.2);
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
         nav {
-            max-width: 1000px;
+            width: 100%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            border-bottom: 1px solid rgba(150, 150, 150, 0.1);
+        }
+
+        .nav-inner {
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 24px 20px;
-            font-size: 18px;
-            font-weight: 600;
+            padding: 22px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* 左边 logo + 文字 布局 */
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-logo {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 700;
             color: var(--primary);
         }
 
-        /* 主标题区域 */
-        .hero {
-            text-align: center;
-            padding: 80px 20px 60px;
-        }
-
-        .hero h1 {
-            font-size: 56px;
-            font-weight: 700;
-            margin-bottom: 12px;
-        }
-
-        .hero p {
-            font-size: 22px;
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            margin-left: 30px;
+            font-size: 16px;
             opacity: 0.8;
         }
 
-        /* 内容区域 */
+        .nav-links a:hover {
+            opacity: 1;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 120px 20px 100px;
+        }
+
+        .hero h1 {
+            font-size: 64px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .hero h3 {
+            font-weight: normal;
+            opacity: 0.7;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 24px;
+            opacity: 0.8;
+            margin-bottom: 40px;
+        }
+
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px 100px;
+            padding: 0 20px 120px;
         }
 
         .card {
             background: var(--card);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 30px;
+            border-radius: 24px;
+            padding: 60px;
+            margin-bottom: 40px;
         }
 
         .card h2 {
-            font-size: 28px;
-            margin-bottom: 20px;
+            font-size: 36px;
+            margin-bottom: 30px;
         }
 
         .card h3 {
-            font-size: 20px;
-            margin: 30px 0 16px;
+            font-size: 24px;
+            margin: 40px 0 20px;
         }
 
         .card p {
-            font-size: 17px;
-            opacity: 0.9;
-            margin-bottom: 10px;
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .feature-item {
+            background: var(--card);
+            padding: 30px;
+            border-radius: 20px;
+        }
+
+        .feature-item h4 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: var(--primary);
         }
 
         .btn {
             display: inline-block;
             background: var(--primary);
             color: #fff;
-            padding: 14px 32px;
-            border-radius: 12px;
+            padding: 18px 40px;
+            border-radius: 14px;
             font-weight: 600;
             text-decoration: none;
-            transition: transform 0.2s;
+            font-size: 16px;
         }
 
-        .btn:hover {
-            transform: scale(1.03);
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            font-size: 15px;
+            opacity: 0.6;
+            border-top: 1px solid rgba(150, 150, 150, 0.1);
         }
     </style>
 </head>
 
 <body>
+    <div id="loader">
+        <div class="spin"></div>
+    </div>
 
-    <nav>MAX OS</nav>
+    <nav>
+        <div class="nav-inner">
+            <!-- ✅ 这里：左边图片 + MAX OS -->
+            <div class="logo-area">
+                <img class="nav-logo" src="https://s1.img-e.com/20260404/69d098fd33744.png">
+                <div class="logo-text">MAX OS</div>
+            </div>
 
-    <div class="hero">
+            <div class="nav-links">
+                <a href="#home">首页</a>
+                <a href="#download">下载</a>
+                <a href="#ecosystem">生态共建</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="hero" id="home">
         <h1>MAX OS</h1>
+        <h3>Open MAX</h3>
         <p>简洁、高效、智能，为下一代计算而生</p>
-        <a href="https://www.bilibili.com/opus/1182232805281628185" class="btn">关于</a>
+        <a href="#download" class="btn">立即下载</a>
     </div>
 
     <div class="container">
         <div class="card">
             <h2>关于 MAX OS</h2>
-            <p>MAX OS 是一款为性能与体验深度优化的操作系统，拥有流畅界面、强大兼容与系统级安全防护。</p>
+            <p>MAX OS 是一款完全自主设计的操作系统，专注于性能、流畅度与安全性。我们致力于打造轻量、稳定、易用的系统体验，适配各类桌面设备，提供现代化操作界面与强大底层能力。</p>
+            <p>无论日常办公、娱乐还是开发环境，MAX OS 都能提供极速响应与持久稳定的运行表现。</p>
 
-            <h3>下载适用于 x64 设备的 ISO 镜像</h3>
-            <a href="https://github.com/yxybc/MAX-OS-/x64install" class="btn">下载</a>
+            <div class="features">
+                <div class="feature-item">
+                    <h4>极速启动</h4>
+                    <p>优化内核与启动流程，开机速度更快，运行全程流畅无卡顿。</p>
+                </div>
+                <div class="feature-item">
+                    <h4>现代界面</h4>
+                    <p>简洁优雅的设计语言，统一交互体验，视觉舒适高效。</p>
+                </div>
+                <div class="feature-item">
+                    <h4>系统安全</h4>
+                    <p>内置多层安全防护机制，保护用户数据与系统环境不受威胁。</p>
+                </div>
+            </div>
+
+            <h3 id="download">下载适用于 x64 设备的 ISO 镜像</h3>
+            <a href="https://github.com/yxybc/MAX-OS-/x64install" class="btn">下载 x64 版本</a>
 
             <h3>下载适用于 x86 设备的 ISO 镜像</h3>
-            <a href="https://github.com/yxybc/MAX-OS-/x86install" class="btn">下载</a>
+            <a href="https://github.com/yxybc/MAX-OS-/x86install" class="btn">下载 x86 版本</a>
+        </div>
+
+        <div class="hero" id="ecosystem">
+            <h2>生态共建</h2>
+            <p>我们欢迎开发者们共建生态，但绝不容忍抄袭，谢谢配合。</p>
+            <a href="https://pan.baidu.com/s/1L8IJI2z1GG5JU6gDFv3TvQ?pwd=1234" class="btn">下载生态合作白皮书</a>
+            <a href="https://github.com/yxybc/MAXOS" class="btn">下载开发版源代码</a>
         </div>
     </div>
 
+    <footer>
+        © 2026 - 现在 MAX OS 项目组 • 极码智联科技 • 保留所有权利
+    </footer>
+
+    <script>
+        setTimeout(function () {
+            const loader = document.getElementById("loader");
+            loader.style.opacity = 0;
+
+            setTimeout(() => {
+                loader.style.display = "none";
+                document.body.classList.add("fade-in");
+            }, 800);
+        }, 500);
+    </script>
 </body>
-<p>© 2026 - 现在 MAX OS项目组 极码智联科技 保留所有权利。</p>
 
 </html>
